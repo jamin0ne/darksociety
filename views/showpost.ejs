@@ -1,0 +1,22 @@
+<% include ./partials/header.ejs %>
+
+<div class="ui container ">
+
+<h1><%= res.title %></h1>
+    <img class="img"  src="<%= res.image %>">
+    <span><%= res.created.toDateString() %></span>
+    <p><%- res.body %></p>
+</div>
+
+<% if( newpost === 1){ %>
+ <a class="ui ash button" href="/blogs/<%= res._id %>/edit">Edit</a>  
+      
+      <form class="inline" action="/blogs/<%= res._id %>?_method=delete" method="post">
+        <input type="text" name = "oldimagepath"  placeholder="image" value= "<%= res.image %>" style="display:none" >
+        <button class="ui button ">
+        Discard
+      </button>
+    </form>
+    <% } %>
+<% include ./partials/footer.ejs %>
+

@@ -1,0 +1,73 @@
+
+/* selected by ID */
+
+#menu .item{
+    
+    color: whitesmoke;
+}
+
+#menu{
+    
+    background: rgb(23, 23, 41);
+}
+i.chess{
+    font-size: 2em;
+}
+#newpostform{
+    margin: 0 auto;
+    max-width: 600px;
+
+}
+
+
+/* selected by class */
+.newcontent {
+    border: 3px inset grey;
+    height: 100px;
+    width: 381px;
+    margin: 10px auto 0;
+}
+.fontStyle {
+    width: 5ex;
+    text-align: center;
+    padding: 1px 3px;
+  }
+
+.afternav.ui.main.text{
+
+    margin: 2em 20px;
+    max-width: 100%;
+    
+    
+}
+
+.footer{
+    background:navy;
+}
+html{
+    max-width: 100%;
+}
+.inline{
+    display: inline;
+}
+.img{
+    max-width: 30%;
+
+}
+
+/* selected by tag name */
+
+h1{
+ 
+    text-align: center;
+
+}
+h3{
+    margin-left: 30px;
+}
+body{
+    margin-top: 5%;
+}
+html{
+    height: 100%;
+}

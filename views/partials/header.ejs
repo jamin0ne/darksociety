@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" class="card">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Benjamins Blog app</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheet/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheet/app.css">
+</head>
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Vali's Blog</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <% if( newpost === 1){ %>
+            <li class="nav-item"><a class="nav-link" href="/blogs/new">New Post</a></li>
+            <% } %>
+            <li class="nav-item"><a class="nav-link"> About</a></li>
+        </ul>
+
+        
+            <% if(search === 1){ %>
+            <form action="/blogs" method="get" class="form-inline my-2 my-lg-0">
+
+
+                <input class="form-control mr-sm-2" name="search" type="text" placeholder="Search...">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+
+            </form>
+            <% } %>
+            <% if( newpost === 1){ %>
+            <a class="btn btn-outline-success my-2 my-sm-0" href="/logout">Logout</a>
+            <% } %>
+
+
+        
+    </div>
+</nav>
+
+<body>

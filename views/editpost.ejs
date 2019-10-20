@@ -1,0 +1,47 @@
+<% include ./partials/header.ejs %>
+
+
+
+
+
+
+<h1 class='ui huge'>New Blog</h1>
+
+<form id="newpostform" class="ui form" action="/blogs/<%= res._id %>?_method=put" method="post" enctype="multipart/form-data">
+    <div class="field">
+        <label>Title</label>
+        <input type="text" name="blog[title]" placeholder="title" value="<%= res.title %>">
+    </div>
+    <div class="field">
+        <div class="ui action input">
+            <input type="text" id="img" placeholder="image" value= "<%= res.imagefilename %>"  readonly>
+                <input type="text" name = "oldimagepath"  placeholder="image" value= "<%= res.image %>" style="display:none" >
+            <input type="file" name="ben" id ="file" style="display:none">
+            <div class="ui icon button">
+              <label for="file"><i class="image icon"></i>image</label>  
+            </div>
+        </div>
+    </div>
+
+    <div class="field">
+        <label>New content</label>
+        <textarea class="newcontent" type="text" name="blog[body]" placeholder="content" required><%= res.body %></textarea>
+    </div>
+    <input class="ui primary button" type="submit" value="Update">
+</form>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
+    </script>
+
+<script>$("input:text").click(function () {
+        $(this).parent().find("input:file").click();
+    });
+
+    $('input:file', '.ui.action.input')
+        .on('change', function (e) {
+            var name = e.target.files[0].name;
+            $('input#img', $(e.target).parent()).val(name);
+        });
+</script>
+<% include ./partials/footer.ejs %>
