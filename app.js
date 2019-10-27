@@ -12,12 +12,12 @@ const methodOverride = require("method-override");
 const path = require('path');
 var blog = require("./mymodules/blogsetup")
 const passport = require('passport');
+require('dotenv').config()
 const passportLocal = require('passport-local');
 const passportLocalMongose = require('passport-local-mongoose');
 const User = require('./mymodules/user');
 const nnaji = require('./mymodules/middlewareandfunctions');
-const DBurl = "mongodb+srv://jamin:jamin0n3@cluster0-ac1si.mongodb.net/test?retryWrites=true&w=majority";
-const localdburl = "mongodb://localhost/benjamin"
+const DBurl = "mongodb+srv://jamin:"+process.env.MON_PASSWORD+"@cluster0-ac1si.mongodb.net/test?retryWrites=true&w=majority";
 var show = false;
 
 //server settup

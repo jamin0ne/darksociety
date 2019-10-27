@@ -1,3 +1,18 @@
+<script>
+
+        function private (){
+            var secret = prompt('whats the secret?');
+            if(secret==22){
+                
+            }else if(secret!=22){
+                console.log('unauthorized attempt');
+            window.location.replace("./blogs")
+        }
+    }
+        
+    private();
+ 
+    </script>
 <form action="/signup" method="post">
 <input type="text" name="username" id="username" placeholder="username">
 <input type="password" name="password" id="password" placeholder="password">
