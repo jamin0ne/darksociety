@@ -1,31 +1,67 @@
 <% include ./partials/header.ejs %>
 
+<div class="container">
+    <h1>New Blog</h1>
+    <div id="newpostform">
+        <form action="/blogs" method="post" enctype="multipart/form-data">
 
-<h1>New Blog</h1>
 
-<form id="newpostform" class="ui form" action="/blogs" method="post" enctype="multipart/form-data">
-    <div class="field">
-        <label>Title</label>
-        <input type="text" name="blog[title]" placeholder="title">
-    </div>
-    <div class="field">
-        <div class="ui action input">
-            <input type="text" placeholder="image" readonly>
-            <input type="file" name="ben" id ="file" style="display:none">
-            <div class="ui icon button">
-              <label for="file"><i class="image icon"></i>image</label>  
+            <div class="row form-group">
+                <label>Title</label>
+                <input class="form-control" type="text" name="blog[title]" placeholder="title">
+            </div>
+            <div class="row">
+                <div class="firstcol col-md-6">
+                    
+                        <input class="btn btn-success btn-lg btn-block" type="text" value="image" readonly>
+                        <input type="file" name="ben" id="file" style="display:none">
+                
+                </div>
+
+                <div class="secondcol col-md-6">
+
+                    <input class="input" type="text" name="blog[body]" style="display:none" required>
+                    <input class="submit btn btn-success btn-lg btn-block" type="submit" value="Post blog">
+                </div>
+            </div>
+        </form>
+
+        <div class="margintop row">
+            <div class="col-md-4">
+                <label id="editor">content:</label></div>
+
+            <div class="float col-md-8">
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <button class="btn btn-success" onclick="document.execCommand('italic',false,null);"
+                        title="Italicize Highlighted Text"><i>I</i>
+                    </button>
+                    <button class="btn btn-success" onclick="document.execCommand( 'bold',false,null);"
+                        title="Bold Highlighted Text"><b>B</b>
+                    </button>
+                    <button class="btn btn-success" onclick="document.execCommand( 'underline',false,null);"><u>U</u>
+                    </button>
+                    <button class="btn btn-success" onclick="document.execCommand( 'insertUnorderedList',false,null);"
+                        title="make dotted list"> •-
+                    </button>
+                <label class="btn btn-success disabled"  for="">Font</label>
+
+                <select class="form-inline fontsize">
+                    <option value="1">10px</option>
+                    <option value="2">15px</option>
+                    <option value="3" selected="true">20px</option>
+                    <option value="4">25px</option>
+                    <option value="5">30px</option>
+                    <option value="6">35px</option>
+                    <option value="7">40px</option>
+                </select>
+            </div>
+            </div>
+
+            <div id="editor1" class="form-control" contenteditable="true">
             </div>
         </div>
     </div>
-
-    <div class="field">
-        <label>New content</label>
-        <textarea contenteditable="true" class="newcontent" name="blog[body]" placeholder="content" required></textarea>
-    </div>
-    <input class="ui primary button" type="submit" value="create">
-</form>
-<a  class="embolden">Bold</a> 
-
+</div>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
     </script>
@@ -34,11 +70,26 @@
         $(this).parent().find("input:file").click();
     });
 
-    $('input:file', '.ui.action.input')
+    $('input:file', '.img')
         .on('change', function (e) {
             var name = e.target.files[0].name;
             $('input:text', $(e.target).parent()).val(name);
         });
-        
+    var input = document.querySelector(".input");
+    var editor1 = document.querySelector("#editor1");
+    var submit = document.querySelector(".submit");
+
+
+    submit.addEventListener("mouseover", function () {
+        input.setAttribute("value", editor1.innerHTML);
+    })
+    input.addEventListener("change", function () {
+        input.setAttribute("value", editor1.innerHTML);
+    })
+
+    var FontSize = document.querySelector('.fontsize').addEventListener("change", function () {
+        var Value = document.querySelector('.fontsize').value;
+        document.execCommand('fontSize', false, Value);
+    })
 </script>
 <% include ./partials/footer.ejs %>

@@ -18,20 +18,22 @@ i.chess{
     max-width: 600px;
 
 }
+#editor1 {
+    background: #fff none repeat scroll 0 0;
+    border: 3px solid gray;
+    height: 550px;
+    margin-bottom: 10px;
+    overflow-y: scroll;
+    padding: 10px;
+    width: 100%;
+   }
 
 
 /* selected by class */
-.newcontent {
-    border: 3px inset grey;
-    height: 100px;
-    width: 381px;
-    margin: 10px auto 0;
+
+.font-weight-bold{
+    color: green;
 }
-.fontStyle {
-    width: 5ex;
-    text-align: center;
-    padding: 1px 3px;
-  }
 
 .afternav.ui.main.text{
 
@@ -50,11 +52,51 @@ html{
 .inline{
     display: inline;
 }
-.img{
+
+.fontStyle {
+    width: 5ex;
+    text-align: center;
+    padding: 1px 3px;
+  }
+  .form-control:focus{
+      border-color: green;
+  }
+  .margintop{
+      margin-top: 20px;
+  }
+
+  .float{
+    padding-left: 165px;
+  }
+  .img{
     max-width: 30%;
-
+  }
+.firstcol{
+    padding-left: 0;
 }
-
+.secondcol{
+    padding-left:40px;
+    padding-right: 0;
+}
+.faint{
+    background-color: #ffffff;
+    opacity: 1;
+    border-radius:30PX;
+    
+  }
+  .center{
+    padding-left: 35%;
+    margin-top: 10px;
+    
+  }
+.edit{
+    margin-right: 10px;
+width: 80px;
+}
+.discard{
+margin-left:10px ;
+width: 80px;
+}
 /* selected by tag name */
 
 h1{
@@ -66,8 +108,16 @@ h3{
     margin-left: 30px;
 }
 body{
-    margin-top: 5%;
+    margin-top: 10%;
 }
 html{
     height: 100%;
 }
+
+
+ 
+  fieldset {
+    margin: 2px auto 15px;
+    width: 358px;
+  }
+ 

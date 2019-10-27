@@ -18,7 +18,8 @@ const User = require('./mymodules/user');
 const nnaji = require('./mymodules/middlewareandfunctions');
 const DBurl = "mongodb+srv://jamin:jamin0n3@cluster0-ac1si.mongodb.net/test?retryWrites=true&w=majority";
 const localdburl = "mongodb://localhost/benjamin"
-var show = 0;
+var show = false;
+
 //server settup
 app.set("view engine", "ejs");
 app.use(expressSession({
@@ -57,9 +58,12 @@ app.get("/", (req, res) => {
     res.redirect("/blogs");
 });
 
-app.get("/blogs", nnaji.islogged, (req, res) => {
-     
+app.get("/blogs", (req, res) => {
+
+    show= nnaji.islogged(req);
     blog.find({}).then((result) => {
+        result = result.reverse();
+
         res.render("index", { Allblogs: result, search: 1, newpost: show });
     }).catch((err) => {
         console.log("Error:" + err);
@@ -71,8 +75,12 @@ app.get("/blogs", nnaji.islogged, (req, res) => {
 
 //signup routes
 app.get("/signup", (req, res) => {
-
-    res.render('signup');
+    show = nnaji.islogged(req);
+    
+    if(show === false){
+        res.render('signup');
+}else res.redirect("/")
+   
 })
 
 app.post("/signup", (req, res) => {
@@ -91,20 +99,25 @@ app.post("/signup", (req, res) => {
 
 
 //login routes
-app.get("/login", (req, res) => {
-
+app.get("/login",(req, res) => {
+show = nnaji.islogged(req);
+    
+    if(show === false){
     res.render('login');
+}else res.redirect("/")
+
+    
 })
 app.post("/login", passport.authenticate('local', {
-
     successRedirect: "/blogs/new",
     failureRedirect: "/blogs",
 }), (req, res) => {
 
 })
+
 // logout route
 app.get("/logout",(req,res)=>{
-    
+   
     req.logOut();
     res.redirect("/");
 
@@ -113,7 +126,7 @@ app.get("/logout",(req,res)=>{
 
 //new route 
 app.get("/blogs/new", nnaji.allowAccess,(req, res) => {
-    show = 1
+    show = nnaji.islogged(req);
     res.render("newpostform", { search: 0, newpost: show });
 
 });

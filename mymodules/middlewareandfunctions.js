@@ -6,18 +6,19 @@ const fs = require("fs");
 const passport = require('passport');
 const passportLocal = require('passport-local');
 const expressSession = require("express-session");
+const express = require("express");
+const app = express();
 var show = 0;
 
 
 var ben = {
     
-islogged: function (req, res, next) {
+islogged: function (req) {
+    var access = false;
     if (req.isAuthenticated()) {
-
-
-        return  next()
-    }
-    return  next()
+          access =true
+      return access 
+    }else return access
 },
 allowAccess: function (req, res, next) {
     if (req.isAuthenticated()) {
