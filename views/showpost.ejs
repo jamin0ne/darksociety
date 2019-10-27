@@ -7,19 +7,30 @@
     border: solid rgba(5, 129, 5, 0.3)
   }
 </style>
+<div class="row">
+<div class="col-md-1">
+   <div class="btn-group-vertical" data-toggle="buttons">
+      <a class="btn  disabled" title= "to change text color of post" >Text color</a>
+      <button type="button" class="btn btn-dark " aria-pressed="true"style="border-top-right-radius:10px; border-top-left-radius: 10px;">Dark</button>
+      <button type="button" class="btn btn-outline-white" >white</button>
+      <button type="button" class="btn btn-success">Green</button>
+      <button type="button" class="btn btn-primary"style="border-buttom-right-radius:10px; border-buttom-left-radius: 10px;">Blue</button>
+    </div>
+  </div>
+  <div class="col-md-10">
 <div class="faint">
   <div class="container image ">
 
-    <h1><%= res.title %></h1>
+    <h1 class="textcolor"><%= res.title %></h1>
     <img class="img img-thumbnail" src="<%= res.image %>">
-    <p><%- res.body %></p>
-    <span><%= res.created.toDateString() %></span>
+    <div class="textcolor"><%- res.body %></div>
+    <span class="textcolor"><%= res.created.toDateString() %></span>
 
   </div>
 </div>
 <div class="center">
   <% if( newpost === true){ %>
-<a class="btn btn-success my-2 my-sm-0 edit" href="/blogs/<%= res._id %>/edit">Edit</a>
+<a class=" btn btn-success my-2 my-sm-0 edit" href="/blogs/<%= res._id %>/edit">Edit</a>
 
 <form class="inline" action="/blogs/<%= res._id %>?_method=delete" method="post">
   <input type="text" name="oldimagepath" placeholder="image" value="<%= res.image %>" style="display:none">
@@ -29,4 +40,23 @@
 </form>
 <% } %>
 </div>
+</div>
+</div>
+<script>
+var buttons =document.querySelectorAll("div button");
+var alltext= document.querySelectorAll(".textcolor");
+ var colors = ["#212529","#ffffff","#1e7e34","#007bff"];
+ for (let i = 0; i < buttons.length; i++) {
+ buttons[i].addEventListener("click",()=>{
+    var color = colors[i];
+  alltext.forEach(text=>{
+  text.setAttribute("style", "color:"+color+";");
+    
+  })
+})
+ }
+
+   
+
+</script>
 <% include ./partials/footer.ejs %>

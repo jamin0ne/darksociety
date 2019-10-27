@@ -78,12 +78,13 @@ app.get("/signup", (req, res) => {
     show = nnaji.islogged(req);
     
     if(show === false){
-        res.render('signup');
+     res.render('signup');
 }else res.redirect("/")
    
 })
 
 app.post("/signup", (req, res) => {
+    
 
     User.register(new User({ username: req.body.username }), req.body.password, (err, User) => {
         if (err) {
