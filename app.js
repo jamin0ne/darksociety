@@ -12,7 +12,7 @@ const methodOverride = require("method-override");
 const path = require('path');
 var blog = require("./mymodules/blogsetup")
 const passport = require('passport');
-require('dotenv').config()
+require('dotenv').config();
 const passportLocal = require('passport-local');
 const passportLocalMongose = require('passport-local-mongoose');
 const User = require('./mymodules/user');
@@ -209,6 +209,6 @@ res.redirect("/blogs");
 
 
 // starting up server
-app.listen('3000', () => {
+app.listen(process.env.PORT, () => {
     console.log("server is connected");
 });
