@@ -74,6 +74,9 @@ i.chess{
     padding-left:40px;
     padding-right: 0;
 }
+.image {
+    border: solid rgba(5, 129, 5, 0.3)
+  }
 .faint{
     background-color: #ffffff;
     opacity: 1;
