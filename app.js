@@ -52,8 +52,8 @@ passport.deserializeUser(User.deserializeUser());
 
 cloudinary.config({
 cloud_name:"dpcrw2zwq",
-api_key:558168194918281,
-api_secret:"2V1_6EOIJtMT4hytDtMJAitBpiU"
+api_key:process.env.APIKEY,
+api_secret:process.env.APISECERT
 })
 
 
