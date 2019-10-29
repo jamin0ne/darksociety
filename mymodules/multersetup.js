@@ -3,12 +3,16 @@ const path = require('path');
 
 // setting-up multer for image uploads
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './public/uploads')
-    },
     filename: function (req, file, cb) {
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
     }
 });
+var filter = function (req,file,cb) {
+    if(!file.originalname.match(/\.(jpg|jepg|png|gif)$/i)){
+return cb(new Error('only image file are allowed'),false);
 
-module.exports= multer({ storage: storage })
+    }
+    cb(null,true);
+}
+
+module.exports= multer({ storage: storage, fileFilter: filter })

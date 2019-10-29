@@ -13,6 +13,7 @@ const path = require('path');
 var blog = require("./mymodules/blogsetup")
 const passport = require('passport');
 require('dotenv').config();
+const cloudinary = require('cloudinary');
 const passportLocal = require('passport-local');
 const passportLocalMongose = require('passport-local-mongoose');
 const User = require('./mymodules/user');
@@ -49,6 +50,11 @@ passport.use(new passportLocal(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+cloudinary.config({
+cloud_name:"dpcrw2zwq",
+api_key:558168194918281,
+api_secret:"2V1_6EOIJtMT4hytDtMJAitBpiU"
+})
 
 
 //Routes using RESTFUL syntax 
@@ -61,9 +67,11 @@ app.get("/", (req, res) => {
 app.get("/blogs", (req, res) => {
 
     show= nnaji.islogged(req);
-    blog.find({}).then((result) => {
-        result = result.reverse();
 
+    blog.find({}).then((result) => {
+        console.log(result);
+        result = result.reverse();
+   
         res.render("index", { Allblogs: result, search: 1, newpost: show });
     }).catch((err) => {
         console.log("Error:" + err);
@@ -133,25 +141,33 @@ app.get("/blogs/new", nnaji.allowAccess,(req, res) => {
 });
 
 //create route
-app.post("/blogs",nnaji.allowAccess, upload.single('ben'), (req, res) => {
-    
-    
-    var post = req;
-    nnaji.uploadfile(post);
-   post.body.blog.body = req.sanitize(req.body.blog.body);
-       blog.create(post.body.blog).then(() => {
-            console.log("created new blog")
-        }).catch((err) => {
-            console.log("Error:" + err)
-        });
+app.post("/blogs", upload.single('ben'), (req, res) => {
+     if(req.file){
+    cloudinary.v2.uploader.upload(req.file.path, function (err,result) {
+             var post = req;
+        post.body.blog.image = result.secure_url;
+        post.body.blog.imageId= result.public_id; 
+    post.body.blog.imagefilename = req.file.originalname;
+    post.body.blog.body = req.sanitize(req.body.blog.body);
 
-    res.redirect("/blogs");
+    blog.create(post.body.blog).then(() => {
+        console.log("created new blog")
+        
+    }).catch((err) => {
+        console.log("Error:" + err)
+    });
+     
+    });
+} 
+res.redirect("/");
+    
 })
 
 // show route
 
 app.get("/blogs/:id", (req, res) => {
    
+
     var postid = req.params.id;
     blog.findById(postid).then((result) => {
 
