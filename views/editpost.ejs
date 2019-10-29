@@ -13,8 +13,7 @@
             <div class="row">
                 <div class="firstcol col-md-6">
                     
-                        <input class="btn btn-success btn-lg btn-block" type="text"value= "<%= res.imagefilename %>" readonly>
-                        <input type="text" name = "oldimagepath"  placeholder="image" value= "<%= res.image %>" style="display:none" >
+                        <input class="btn btn-success btn-lg btn-block imageinput" type="text"value= "<%= res.imagefilename %>" readonly>
                         <input type="file" name="ben" id="file" style="display:none">
                 
                 </div>
@@ -66,14 +65,14 @@
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
     </script>
 
-<script>$("input:text").click(function () {
+<script>$(".imageinput").click(function () {
         $(this).parent().find("input:file").click();
     });
 
-    $('input:file', '.img')
+    $('input:file', '.imageinput')
         .on('change', function (e) {
             var name = e.target.files[0].name;
-            $('input:text', $(e.target).parent()).val(name);
+            $('.imageinput', $(e.target).parent()).val(name);
         });
     var input = document.querySelector(".input");
     var editor1 = document.querySelector("#editor1");

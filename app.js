@@ -69,7 +69,6 @@ app.get("/blogs", (req, res) => {
     show= nnaji.islogged(req);
 
     blog.find({}).then((result) => {
-        console.log(result);
         result = result.reverse();
    
         res.render("index", { Allblogs: result, search: 1, newpost: show });
@@ -141,7 +140,7 @@ app.get("/blogs/new", nnaji.allowAccess,(req, res) => {
 });
 
 //create route
-app.post("/blogs", upload.single('ben'), (req, res) => {
+app.post("/blogs",nnaji.allowAccess, upload.single('ben'), (req, res) => {
      if(req.file){
     cloudinary.v2.uploader.upload(req.file.path, function (err,result) {
              var post = req;
@@ -156,10 +155,20 @@ app.post("/blogs", upload.single('ben'), (req, res) => {
     }).catch((err) => {
         console.log("Error:" + err)
     });
-     
-    });
-} 
+     return res.redirect("/");
+});
+} else {
+    var post = req; 
+post.body.blog.body = req.sanitize(req.body.blog.body);
+
+blog.create(post.body.blog).then(() => {
+    console.log("created new blog")
+    
+}).catch((err) => {
+    console.log("Error:" + err)
+});
 res.redirect("/");
+}
     
 })
 
@@ -196,23 +205,43 @@ app.get("/blogs/:id/edit",nnaji.allowAccess, (req, res) => {
 
 // update route
 app.put("/blogs/:id",nnaji.allowAccess, upload.single('ben'), (req, res) => {
-    var post = req;
-    nnaji.uploadfile(post);
-   post.body.blog.body = req.sanitize(req.body.blog.body);
-   blog.findByIdAndUpdate(req.params.id,post.body.blog).then(() => {
-    console.log("blog updated")
-}).catch((err) => {
-    console.log("Error:" + err)
-    res.redirect("/blogs")
-});
- res.redirect("/blogs/" + req.params.id);
+    if(req.file){
+
+     nnaji.photodelete(req); 
+        cloudinary.v2.uploader.upload(req.file.path, function (err,result) {
+                 var post = req;
+            post.body.blog.image = result.secure_url;
+            post.body.blog.imageId= result.public_id; 
+        post.body.blog.imagefilename = req.file.originalname;
+        post.body.blog.body = req.sanitize(req.body.blog.body);
+    
+        blog.findByIdAndUpdate(req.params.id,post.body.blog).then(() => {
+            console.log("blog updated")
+        }).catch((err) => {
+            console.log("Error:" + err)
+            res.redirect("/blogs")
+        });
+        return res.redirect("/blogs/" + req.params.id);
+    });
+    } else {
+        var post = req; 
+    post.body.blog.body = req.sanitize(req.body.blog.body);
+    blog.findByIdAndUpdate(req.params.id,post.body.blog).then(() => {
+        console.log("blog updated")
+    }).catch((err) => {
+        console.log("Error:" + err)
+        res.redirect("/blogs")
+    });
+     res.redirect("/blogs/" + req.params.id);
+    }
+ 
 })
 
 
 // delete route 
 app.delete('/blogs/:id',nnaji.allowAccess, (req, res) => {
 
-nnaji.photocheck(req.body.oldimagepath)
+ nnaji.photodelete(req);
 blog.findByIdAndDelete(req.params.id).then(() => {
     console.log("post deleted");}).catch((err) => {
         console.log("Error:" + err)});
