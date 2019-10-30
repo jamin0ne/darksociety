@@ -107,9 +107,18 @@ h3{
     margin-left: 30px;
 }
 body{
-    margin-top: 10%;
+    margin-top: 55px;
     font-family: 'Indie Flower', cursive;
 }
+@media only screen and (max-width : 512px) {
+   
+    body{
+        margin-top: 70px;
+        font-family: 'Indie Flower', cursive;
+    }
+
+    }
+
 
 
 

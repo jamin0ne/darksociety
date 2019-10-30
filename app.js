@@ -269,7 +269,21 @@ app.get("/discussion",(req, res) => {
 
 });
 
+app.get("/discussion",(req, res) => {
+    show = nnaji.islogged(req);
+    res.render("livechat", { search: 0, newpost: show });
 
+});
+
+
+
+
+
+
+app.get("/*",(req, res) => {
+   
+   res.redirect("/blogs");
+});
 
 // starting up server
 app.listen(process.env.PORT, () => {
