@@ -11,14 +11,14 @@
                 <input class="form-control" type="text" name="blog[title]" placeholder="title">
             </div>
             <div class="row">
-                <div class="firstcol col-md-6">
+                <div class="firstcol col-md-xs-6">
                     
                         <input class="btn btn-success btn-lg btn-block imagetext" type="text" value="image" readonly>
                         <input type="file" name="ben" id="file" style="display:none">
                 
                 </div>
 
-                <div class="secondcol col-md-6">
+                <div class="secondcol col-md-xs-6">
 
                     <input class="input" type="text" name="blog[body]" style="display:none" required>
                     <input class="submit btn btn-success btn-lg btn-block" type="submit" value="Post blog">
@@ -66,14 +66,14 @@
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
     </script>
 
-<script>$("input:text").click(function () {
+<script>$(".imagetext").click(function () {
         $(this).parent().find("input:file").click();
     });
 
-    $('input:file', '.imagetext')
+    $('input:file')
         .on('change', function (e) {
             var name = e.target.files[0].name;
-            $('input:text', $(e.target).parent()).val(name);
+            $('.imagetext', $(e.target).parent()).val(name);
         });
     var input = document.querySelector(".input");
     var editor1 = document.querySelector("#editor1");

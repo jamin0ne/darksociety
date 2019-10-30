@@ -141,6 +141,7 @@ app.get("/blogs/new", nnaji.allowAccess,(req, res) => {
 
 //create route
 app.post("/blogs",nnaji.allowAccess, upload.single('ben'), (req, res) => {
+    //check if picture is uploaded
      if(req.file){
     cloudinary.v2.uploader.upload(req.file.path, function (err,result) {
              var post = req;
@@ -205,16 +206,19 @@ app.get("/blogs/:id/edit",nnaji.allowAccess, (req, res) => {
 
 // update route
 app.put("/blogs/:id",nnaji.allowAccess, upload.single('ben'), (req, res) => {
+    //checks if new picture is uploaded
     if(req.file){
 
+        //deletes old picture form cloudianry
      nnaji.photodelete(req); 
+     //upload new picture to cloudinary and return link path
         cloudinary.v2.uploader.upload(req.file.path, function (err,result) {
                  var post = req;
             post.body.blog.image = result.secure_url;
             post.body.blog.imageId= result.public_id; 
         post.body.blog.imagefilename = req.file.originalname;
         post.body.blog.body = req.sanitize(req.body.blog.body);
-    
+    //updating post with new info
         blog.findByIdAndUpdate(req.params.id,post.body.blog).then(() => {
             console.log("blog updated")
         }).catch((err) => {
@@ -250,6 +254,20 @@ res.redirect("/blogs");
 
 })
 
+//About route
+app.get("/about",(req, res) => {
+    show = nnaji.islogged(req);
+    res.render("about", { search: 0, newpost: show });
+
+});
+
+
+//Livechat route
+app.get("/discussion",(req, res) => {
+    show = nnaji.islogged(req);
+    res.render("livechat", { search: 0, newpost: show });
+
+});
 
 
 

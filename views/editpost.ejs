@@ -11,14 +11,14 @@
                 <input class="form-control" type="text" name="blog[title]" placeholder="title"value="<%= res.title %>">
             </div>
             <div class="row">
-                <div class="firstcol col-md-6">
+                <div class="firstcol col-md-xs-6">
                     
                         <input class="btn btn-success btn-lg btn-block imageinput" type="text"value= "<%= res.imagefilename %>" readonly>
                         <input type="file" name="ben" id="file" style="display:none">
                 
                 </div>
 
-                <div class="secondcol col-md-6">
+                <div class="secondcol col-md-xs-6">
 
                     <input class="input" type="text" name="blog[body]" style="display:none" value="<%= res.body %>" required>
                     <input class="submit btn btn-success btn-lg btn-block" type="submit" value="Post blog">
@@ -69,7 +69,7 @@
         $(this).parent().find("input:file").click();
     });
 
-    $('input:file', '.imageinput')
+    $('input:file')
         .on('change', function (e) {
             var name = e.target.files[0].name;
             $('.imageinput', $(e.target).parent()).val(name);
