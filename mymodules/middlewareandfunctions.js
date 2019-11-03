@@ -10,29 +10,17 @@ const express = require("express");
 const app = express();
 var blog = require("./blogsetup.js");
 const cloudinary = require('cloudinary');
-const User = require('./user.js');
+
 
 var ben = {
     
 islogged: function (req) {
     var access = false;
-    var admin =false;
     if (req.isAuthenticated()) {
-        User.findOne(req.body.username).then((result)=>{
-            console.log(result)
-        if (result.username === "jamin0ne"){
-            admin =true
-            access=true
-            return [access,admin]
-    }else {
-        admin = false
-            access=true
-            return [access,admin]
-    }
-})
-}else {return [access,admin]}
-
-    },
+          access =true
+      return access 
+    }else return access
+},
 allowAccess: function (req, res, next) {
     if (req.isAuthenticated()) {
 

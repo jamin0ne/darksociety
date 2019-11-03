@@ -21,7 +21,7 @@
   </div>
 </div>
 <div class="center">
-  <% if( newpost[1] === true){ %>
+  <% if( newpost === true){ %>
 <a class=" btn btn-success my-2 my-sm-0 edit" href="/blogs/<%= res._id %>/edit">Edit</a>
 
 <form class="inline" action="/blogs/<%= res._id %>?_method=delete" method="post">

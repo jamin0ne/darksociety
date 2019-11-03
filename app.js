@@ -19,8 +19,7 @@ const passportLocalMongose = require('passport-local-mongoose');
 const User = require('./mymodules/user');
 const nnaji = require('./mymodules/middlewareandfunctions');
 const DBurl = "mongodb+srv://jamin:"+process.env.MON_PASSWORD+"@cluster0-ac1si.mongodb.net/test?retryWrites=true&w=majority";
-var show =[];
-var waterfall = require('async-waterfall');
+var show = false;
 
 //server settup
 app.set("view engine", "ejs");
@@ -67,8 +66,8 @@ app.get("/", (req, res) => {
 
 app.get("/blogs", (req, res) => {
 
-    show = nnaji.islogged(req);
-    console.log(show)
+    show= nnaji.islogged(req);
+
     blog.find({}).then((result) => {
         result = result.reverse();
    
@@ -85,7 +84,7 @@ app.get("/blogs", (req, res) => {
 app.get("/signup", (req, res) => {
     show = nnaji.islogged(req);
     
-    if(show[0] === false||show[1] === false){
+    if(show === false){
      res.render('signup');
 }else res.redirect("/")
    
@@ -94,7 +93,7 @@ app.get("/signup", (req, res) => {
 app.post("/signup", (req, res) => {
     
 
-    User.register(new User({ username: req.body.username,email: req.body.email}), req.body.password, (err, User) => {
+    User.register(new User({ username: req.body.username }), req.body.password, (err, User) => {
         if (err) {
             console.log(err);
             return res.render("signup");
@@ -110,16 +109,16 @@ app.post("/signup", (req, res) => {
 //login routes
 app.get("/login",(req, res) => {
 show = nnaji.islogged(req);
-console.log(show)
-    if(show[0] === false||show[1] === false){
+    
+    if(show === false){
     res.render('login');
 }else res.redirect("/")
 
     
 })
 app.post("/login", passport.authenticate('local', {
-    successRedirect: "/blogs",
-    failureRedirect: "/blogs",  
+    successRedirect: "/blogs/new",
+    failureRedirect: "/blogs",
 }), (req, res) => {
 
 })
