@@ -10,18 +10,22 @@ const express = require("express");
 const app = express();
 var blog = require("./blogsetup.js");
 const cloudinary = require('cloudinary');
+var nodemailer = require("./nodemailersetup.js");
+
 
 
 var ben = {
     
 islogged: function (req) {
-    var access = false;
+    
     if (req.isAuthenticated()) {
-          access =true
-      return access 
-    }else return access
+          
+      return req.user.username;
+    }else {return null;}
 },
+
 allowAccess: function (req, res, next) {
+
     if (req.isAuthenticated()) {
 
 
@@ -40,6 +44,25 @@ photodelete:function (request){
 })
     }
 },
+sendmail: function (params) {
+       
+    let info = transporter.sendMail({
+         from: '"jamin 👻" <nnajibenjamin33@gmail.com>', // sender address
+         to: 'bennnaji33@gmail.com', // list of receivers
+         subject: 'computer repair appointment', // Subject line
+         text: params, // plain text body
+         
+          // html body
+     });
+ 
+     console.log('Message sent: %s', info.messageId);
+     // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+ 
+     // Preview only available when sending through an Ethereal account
+     console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+     // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+ 
+ }
  
 }
 module.exports = ben;

@@ -4,7 +4,7 @@
 
         <% Allblogs.forEach((i)=>{ %>
         <br>
-        <a href="/blogs/<%= i._id %>">
+        <button type="button" id="bloglist"  onclick="window.location.href = '/blogs/<%= i._id %>';">
             <div class="container ">
                 <h3 class="text-uppercase" style="color: green;"> <%= i.title %> </h3>
                 <img class="img img-thumbnail" src="<%= i.image %>">
@@ -14,10 +14,10 @@
                     <a href="/blogs/<%= i._id %>">Read more</a>
                 </div>
             </div>
-        </a>
+        </button>
 
 <br>
-<hr>
+
 <% }) %>
 
 </div>

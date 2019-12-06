@@ -16,10 +16,11 @@ require('dotenv').config();
 const cloudinary = require('cloudinary');
 const passportLocal = require('passport-local');
 const passportLocalMongose = require('passport-local-mongoose');
+
 const User = require('./mymodules/user');
 const nnaji = require('./mymodules/middlewareandfunctions');
 const DBurl = "mongodb+srv://jamin:"+process.env.MON_PASSWORD+"@cluster0-ac1si.mongodb.net/test?retryWrites=true&w=majority";
-var show = false;
+var show = null ;
 
 //server settup
 app.set("view engine", "ejs");
@@ -66,9 +67,27 @@ app.get("/", (req, res) => {
 
 app.get("/blogs", (req, res) => {
 
-    show= nnaji.islogged(req);
+    show = nnaji.islogged(req);
 
     blog.find({}).then((result) => {
+        result = result.reverse();
+   
+        res.render("index", { Allblogs: result, search: 1, newpost: show });
+    }).catch((err) => {
+        console.log("Error:" + err);
+    });
+
+});
+
+// search route
+
+app.get("/blogs/search", (req, res) => {
+
+    show = nnaji.islogged(req);
+    console.log(req.query.search);
+    var searchKey=req.query.search;
+
+    blog.find({"title":searchKey}).then((result) => {
         result = result.reverse();
    
         res.render("index", { Allblogs: result, search: 1, newpost: show });
@@ -84,7 +103,7 @@ app.get("/blogs", (req, res) => {
 app.get("/signup", (req, res) => {
     show = nnaji.islogged(req);
     
-    if(show === false){
+    if(show === null){
      res.render('signup');
 }else res.redirect("/")
    
@@ -93,7 +112,7 @@ app.get("/signup", (req, res) => {
 app.post("/signup", (req, res) => {
     
 
-    User.register(new User({ username: req.body.username }), req.body.password, (err, User) => {
+    User.register(new User({ username: req.body.username, email:req.body.email }), req.body.password, (err, User) => {
         if (err) {
             console.log(err);
             return res.render("signup");
@@ -109,8 +128,8 @@ app.post("/signup", (req, res) => {
 //login routes
 app.get("/login",(req, res) => {
 show = nnaji.islogged(req);
-    
-    if(show === false){
+    console.log(show)
+    if(show === null){
     res.render('login');
 }else res.redirect("/")
 
@@ -125,15 +144,17 @@ app.post("/login", passport.authenticate('local', {
 
 // logout route
 app.get("/logout",(req,res)=>{
-   
+   var curUserUrl= req.headers.referer;
     req.logOut();
-    res.redirect("/");
+    res.redirect(curUserUrl);
 
 })
 
 
 //new route 
 app.get("/blogs/new", nnaji.allowAccess,(req, res) => {
+   
+    console.log("new route: "+req.user.username)
     show = nnaji.islogged(req);
     res.render("newpostform", { search: 0, newpost: show });
 
@@ -141,12 +162,14 @@ app.get("/blogs/new", nnaji.allowAccess,(req, res) => {
 
 //create route
 app.post("/blogs",nnaji.allowAccess, upload.single('ben'), (req, res) => {
+    console.log("new blog created: "+req.user.username);
     //check if picture is uploaded
      if(req.file){
     cloudinary.v2.uploader.upload(req.file.path, function (err,result) {
              var post = req;
         post.body.blog.image = result.secure_url;
         post.body.blog.imageId= result.public_id; 
+        post.body.blog.author = req.user.username;
     post.body.blog.imagefilename = req.file.originalname;
     post.body.blog.body = req.sanitize(req.body.blog.body);
 
@@ -160,6 +183,7 @@ app.post("/blogs",nnaji.allowAccess, upload.single('ben'), (req, res) => {
 });
 } else {
     var post = req; 
+    post.body.blog.author = req.user.username;
 post.body.blog.body = req.sanitize(req.body.blog.body);
 
 blog.create(post.body.blog).then(() => {

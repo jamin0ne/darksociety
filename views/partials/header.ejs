@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="card">
+<html lang="en" >
 
 <head>
     <meta charset="UTF-8">
@@ -26,7 +26,7 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-            <% if( newpost === true){ %>
+            <% if(newpost!= null || undefined){ %>
             <li class="nav-item"><a class="nav-link" href="/blogs/new">New Post</a></li>
             <% } %>
             <li class="nav-item"><a class="nav-link"href="/about"> About</a></li>
@@ -35,16 +35,24 @@
 
         
             <% if(search === 1){ %>
-            <form action="/blogs" method="get" class="form-inline my-2 my-lg-0">
+            <form action="/blogs/search" method="get" class="form-inline my-2 my-lg-0">
 
 
                 <input class="form-control mr-sm-2" name="search" type="text" placeholder="Search...">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <button class="btn btn-outline-success my-3 mr-2 my-sm-0" type="submit">Search</button>
 
             </form>
             <% } %>
-            <% if( newpost === true){ %>
+            <% if(newpost!= null || undefined){ %>
+            <div class="dropdown">
+                <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <%= newpost %>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="btn btn-outline-success my-2 my-sm-0" href="/logout">Logout</a>
+                  
+                </div>
+              </div>
             <% }else{ %>
             <a class="btn btn-outline-success my-2 my-sm-0" href="/login">Admin login</a>
             <% }%>
