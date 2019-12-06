@@ -3,8 +3,8 @@
 <div class="col-md-1">
    <div class="btn-group-vertical" data-toggle="buttons">
       <a class="btn  disabled" title= "to change text color of post" >Text color</a>
-      <button type="button" class="btn btn-dark " aria-pressed="true"style="border-top-right-radius:10px; border-top-left-radius: 10px;">Dark</button>
-      <button type="button" class="btn btn-white"style="border-buttom-right-radius:10px; border-buttom-left-radius: 10px;">white</button>
+      <button type="button" class="btn btn-dark textcolor " aria-pressed="true"style="border-top-right-radius:10px; border-top-left-radius: 10px;">Dark</button>
+      <button type="button" class="btn btn-white textcolor"style="border-buttom-right-radius:10px; border-buttom-left-radius: 10px;">white</button>
     </div>
   </div>
   <div class="col-md-10">
@@ -45,12 +45,8 @@ var innerbackground = document.querySelector(".faint");
   text.setAttribute("style", "color:"+ffffff+";");
   innerbackground.setAttribute("style","background-color:"+b212529+";")
   })
-  buttons.forEach(button=>{
-    button.setAttribute("style", "background-color:"+ffffff+";");
-    button.setAttribute("style", "color:"+b212529+";");
-  })
   body.setAttribute("style","background-color:"+b212529+";")
-
+  buttons[1].setAttribute("style","background-color:"+ffffff+";")
 })
 buttons[1].addEventListener("click",()=>{
   alltext.forEach(text=>{
@@ -58,6 +54,8 @@ buttons[1].addEventListener("click",()=>{
   innerbackground.setAttribute("style","background-color:"+ffffff+";")
   })
   body.setAttribute("style","background-color:"+ffffff+";")
+  buttons[0].setAttribute("style","background-color:"+b212529+";")
+
 })
 
    
