@@ -85,7 +85,7 @@ app.get("/blogs/search", (req, res) => {
     show = nnaji.islogged(req);
     console.log(req.query.search);
     var searchKey= req.query.search;
-    blog.find({"title":searchKey && { $regex:searchKey.slice(0,0)}}).then((result) => {
+    blog.find({"title":searchKey && { $regex:searchKey.slice(0,1)}}).then((result) => {
         result = result.reverse();
    
         res.render("index", { Allblogs: result, search: 1, newpost: show, msg:"search results" });
