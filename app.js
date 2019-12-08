@@ -36,7 +36,6 @@ app.use(methodOverride('_method'));
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 // Database setup
 mongoose.connect(DBurl, { useNewUrlParser: true }).then(() => {
     console.log("DB is connected")
@@ -85,12 +84,11 @@ app.get("/blogs/search", (req, res) => {
 
     show = nnaji.islogged(req);
     console.log(req.query.search);
-    var searchKey=req.query.search;
-
-    blog.find({"title":searchKey}).then((result) => {
+    var searchKey= req.query.search;
+    blog.find({"title":searchKey && { $regex:searchKey.slice(0,0)}}).then((result) => {
         result = result.reverse();
    
-        res.render("index", { Allblogs: result, search: 1, newpost: show });
+        res.render("index", { Allblogs: result, search: 1, newpost: show, msg:"search results" });
     }).catch((err) => {
         console.log("Error:" + err);
     });
@@ -100,27 +98,23 @@ app.get("/blogs/search", (req, res) => {
 
 
 //signup routes
-app.get("/signup", (req, res) => {
-    show = nnaji.islogged(req);
-    
-    if(show === null){
-     res.render('signup');
-}else res.redirect("/")
-   
-})
 
 app.post("/signup", (req, res) => {
-    
-
+    User.findOne({email:req.body.email}).then((result)=>{
+      if(result.email !== null || undefined){
+        return res.render("login",{search: 0, newpost:show, msg:"email already exist" });
+          }
+        }).catch((err)=>{
     User.register(new User({ username: req.body.username, email:req.body.email }), req.body.password, (err, User) => {
         if (err) {
             console.log(err);
-            return res.render("signup");
+            return res.render("login",{search: 0, newpost:show, msg: err.message });
         }
         passport.authenticate("local")(req, res, () => {
-            res.redirect('/blogs')
+                    res.redirect("/blogs")
         })
     })
+})
 
 });
 
@@ -130,13 +124,13 @@ app.get("/login",(req, res) => {
 show = nnaji.islogged(req);
     console.log(show)
     if(show === null){
-    res.render('login');
+    res.render('login', {search: 0, newpost:show });
 }else res.redirect("/")
 
     
 })
 app.post("/login", passport.authenticate('local', {
-    successRedirect: "/blogs/new",
+    successRedirect: "/blogs",
     failureRedirect: "/blogs",
 }), (req, res) => {
 

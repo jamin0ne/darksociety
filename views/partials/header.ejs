@@ -38,9 +38,9 @@
             <form action="/blogs/search" method="get" class="form-inline my-2 my-lg-0">
 
 
-                <input class="form-control mr-sm-2" name="search" type="text" placeholder="Search...">
+                <input required class="form-control mr-sm-2" name="search" type="text" placeholder="Search...">
                 <button class="btn btn-outline-success my-3 mr-2 my-sm-0" type="submit">Search</button>
-
+   
             </form>
             <% } %>
             <% if(newpost!= null || undefined){ %>
@@ -54,7 +54,7 @@
                 </div>
               </div>
             <% }else{ %>
-            <a class="btn btn-outline-success my-2 my-sm-0" href="/login">Admin login</a>
+            <a class="btn btn-outline-success my-2 my-sm-0" href="/login">login/sign-up</a>
             <% }%>
 
 
@@ -62,4 +62,6 @@
     </div>
 </nav>
 
-<body >
+<body class="afternav" >
+
+        <div class="text-center"><%= typeof msg != 'undefined' ? msg : '' %></div>

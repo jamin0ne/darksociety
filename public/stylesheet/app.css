@@ -42,15 +42,14 @@ i.chess{
     color: green;
 }
 
-.afternav.ui.main.text{
-
-    margin: 2em 20px;
-    max-width: 100%;
-    
-    
+.afternav{
+    margin-top: 100px;
 }
 
+.logindiv {
+    border-right: gray 2px solid;
 
+}
 
 .inline{
     display: inline;

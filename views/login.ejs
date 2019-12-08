@@ -1,11 +1,37 @@
-
-
-
-
-
-<form class="" action="/login" method="post">
-    <input class="form-control" type="text" name="username" id="username" placeholder="username">
-    <input class="form-control" type="password" name="password" id="password" placeholder="password">
-    <input type="submit" value="submit">
+<% include ./partials/header.ejs %>
+<div class="container-md row">
+    <div class="col-1"></div>
+    <div class="col-5 logindiv">
+        <h2 class="text-center">LOGIN</h2>
+<form  action="/login" method="post">
+    <div class="form-group">
+            <label for="susername">username</label>
+            <input class="form-control" type="text" name="username" id="susername" placeholder="username">
+        </div>
+        <div class="form-group">
+            <label for="spassword">password</label>
+            <input class="form-control" type="password" name="password" id="spassword" placeholder="password">
+        </div>
+    <button class="btn btn-success">Login</button>
     </form>
-    <a href="/signup"></a>
+</div>
+<div class="col-5">
+        <h2 class="text-center">SIGN UP</h2>
+            <form autocomplete="off"  action="/signup" method="post">
+                <div class="form-group" >
+                <label for="username">username</label>
+                <input autocomplete="false" class="form-control" type="text" name="username" id="username" placeholder="username" >
+            </div>
+            <div class="form-group">
+                 <label for="email">Email</label>
+                <input autocomplete="false" class="form-control" type="email" name="email" id="email" placeholder="example@email.com">
+            </div>
+            <div class="form-group">
+                <label for="password">password</label>
+                <input autocomplete="false" class="form-control" type="password" name="password" id="password" placeholder="password">
+            </div>
+               <button class="btn btn-success">Signup</button>
+            </form>
+    </div>
+</div>
+<% include ./partials/footer.ejs %>
