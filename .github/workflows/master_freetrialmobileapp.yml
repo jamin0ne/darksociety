@@ -52,5 +52,5 @@ jobs:
       with:
         app-name: 'freetrialmobileapp'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_ef3f4615a6e249c8ac2b9b24d60f2a3a }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_32b22981035a4dac9c3b710ec8961f5b }}
         package: .
