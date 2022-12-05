@@ -95,8 +95,6 @@ app.get("/blogs/search", (req, res) => {
 
 });
 
-
-
 //signup routes
 
 app.post("/signup", (req, res) => {
