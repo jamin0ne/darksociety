@@ -19,7 +19,7 @@ const passportLocalMongose = require('passport-local-mongoose');
 
 const User = require('./mymodules/user');
 const nnaji = require('./mymodules/middlewareandfunctions');
-const DBurl = "mongodb+srv://jamin:"+process.env.MON_PASSWORD+"@cluster0-ac1si.mongodb.net/test?retryWrites=true&w=majority";
+const DBurl = "mongodb+srv://jamin1:"+process.env.MON_PASSWORD+"@cluster0.qthmu.mongodb.net/?retryWrites=true&w=majority";
 var show = null ;
 
 //server settup
@@ -37,12 +37,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Database setup
-mongoose.connect(DBurl, { useNewUrlParser: true }).then(() => {
+mongoose.connect(DBurl,{useNewUrlParser: true, useUnifiedTopology: true}).then(() => {
     console.log("DB is connected")
 }).catch((err) => {
     console.log("DB lost connection:" + err)
 });
 mongoose.set('useFindAndModify', false);
+
 
 
 //passport configuration
@@ -94,6 +95,8 @@ app.get("/blogs/search", (req, res) => {
     });
 
 });
+
+
 
 //signup routes
 
