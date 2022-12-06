@@ -32,7 +32,7 @@ app.use(expressSession({
 app.use(express.static("public"));
 app.use(BodyParser.urlencoded({ extended: true }));
 app.use(expressSanitizer());
-app.use(methodOverride('_method'));
+app.use(methodOverride('_method'))
 app.use(passport.initialize());
 app.use(passport.session());
 
