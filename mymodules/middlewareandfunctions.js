@@ -21,7 +21,7 @@ islogged: function (req) {
     if (req.isAuthenticated()) {
           
       return req.user.username;
-    }else {return null;}
+    }else {return "user not authenticated";}
 },
 
 allowAccess: function (req, res, next) {

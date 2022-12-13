@@ -25,7 +25,7 @@ var show = null ;
 //server settup
 app.set("view engine", "ejs");
 app.use(expressSession({
-    secret: 'who said love is not a beautiful thing',
+    secret: process.env.SECERET,
     resave: false,
     saveUninitialized: false
 }));
