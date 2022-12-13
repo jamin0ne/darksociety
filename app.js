@@ -123,7 +123,7 @@ app.post("/signup", (req, res) => {
 //login routes
 app.get("/login",(req, res) => {
 show = nnaji.islogged(req);
-    console.log(show)
+    
     if(show === null){
     res.render('login', {search: 0, newpost:show });
 }else res.redirect("/")
